@@ -32,18 +32,18 @@ def carrots_to_medal(sammy, medal, carrot_cost):
     per step for each direction
     :return: (integer) the number of carrots.
     """
-    # Enter your code here and remove the pass statement below
     if medal and carrot_cost:
         pos = sammy
         count = 0
 
-        # While Sammy not at medal, choose positive movement with least cost
+        # While not at medal, choose positive movement with least cost
         while pos != medal:
             #print(f'x = {(abs(medal[0] - pos[0])) ** 2}, y = {(abs(medal[1] - pos[1])) ** 2}')
             posDist = (abs(medal[0] - pos[0])) ** 2 + (abs(medal[1] - pos[1])) ** 2
-            # Might be flipped
             moves = {WEST: (pos[0] - 1, pos[1]), EAST: (pos[0] + 1, pos[1]), NORTH:(pos[0], pos[1] - 1), SOUTH: (pos[0], pos[1] + 1)}
             best = ""
+
+            # Iterate through posible moves to find least cost, change current position, and add to carrot count.
             for direction in moves:
                 moveDist = (abs(medal[0] - moves[direction][0]))**2 + (abs(medal[1] - moves[direction][1]))**2
                 if moveDist < posDist:
@@ -65,12 +65,11 @@ def min_carrots(sammy, medals, carrot_cost):
     per step for each direction
     :return: (integer) the number of carrots.
     """
-    # Enter your code here and remove the pass statement below
-    #Return non if no remaining medals
+    # Return non if no remaining medals
     if not medals:
         return None
 
-    #generator expression
+    # generator expression
     carCount = (carrots_to_medal(sammy, cost, carrot_cost) for cost in medals)
     return min(carCount)
 
@@ -83,8 +82,10 @@ def most_carrots_medal(sammy, medals, carrot_cost):
     per step for each direction
     :return: (tuple) the position of the medal
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    # max function will compute carrots_to_medal and select the position with the highest count.
+    if medals and carrot_cost:
+        return max(medals, key=lambda m: carrots_to_medal(sammy,m,carrot_cost))
+    return None
 
 def main():
     # The main function is used to test the 3 functions.
