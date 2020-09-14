@@ -9,7 +9,7 @@
 """
 Class definition to visualize the quest
 """
-#import tkinter
+import tkinter
 import time
 
 

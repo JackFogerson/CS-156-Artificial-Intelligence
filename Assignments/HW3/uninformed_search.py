@@ -85,6 +85,6 @@ def ucs(problem):
         if node.state not in closed:  # we are implementing graph search
             closed.add(node.state)
             for child_state, action, action_cost in problem.expand(node.state):
-                child_node = data_structures.Node(child_state, node, action, action_cost)
+                child_node = data_structures.Node(child_state, node, action, node.cumulative_cost + action_cost)
                 fringe.push(child_node, child_node.cumulative_cost)
     return None

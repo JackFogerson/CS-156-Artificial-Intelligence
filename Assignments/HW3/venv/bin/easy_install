@@ -1,4 +1,4 @@
-#!/home/spencer/Desktop/CS-156/HW3/venv/bin/python
+#!/Users/spencerenriquez/Documents/GitHub/CS-156-Artificial-Intelligence/Assignments/HW3/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
