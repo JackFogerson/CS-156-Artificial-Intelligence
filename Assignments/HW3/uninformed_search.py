@@ -76,8 +76,8 @@ def ucs(problem):
     closed = set()  # keep track of our explored
     fringe = data_structures.PriorityQueue() # for ucs, the fringe is a Priority queue
     state = problem.start_state()
-    root = data_structures.Node(state, None, None, 0)
-    fringe.push(root, data_structures.Node.solution(root))
+    root = data_structures.Node(state, None, None)
+    fringe.push(root, root.cumulative_cost)
     while not fringe.is_empty():
         node = fringe.pop()
         if problem.is_goal(node.state):
@@ -85,7 +85,6 @@ def ucs(problem):
         if node.state not in closed:  # we are implementing graph search
             closed.add(node.state)
             for child_state, action, action_cost in problem.expand(node.state):
-                child_node = data_structures.Node(child_state, node, action, 1)
-                fringe.push(child_node, data_structures.Node.solution(child_node))
+                child_node = data_structures.Node(child_state, node, action, action_cost)
+                fringe.push(child_node, child_node.cumulative_cost)
     return None
-
