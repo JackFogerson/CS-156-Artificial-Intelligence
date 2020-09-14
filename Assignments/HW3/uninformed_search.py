@@ -7,7 +7,6 @@
 # ----------------------------------------------------------------------
 """
 Uninformed Search Algorithm implementation
-
 dfs has been implemented for you.
 Your task for homework 3 is to implement bfs and ucs.
 """
@@ -74,5 +73,19 @@ def ucs(problem):
             see Problem class definition in spartanquest.py)
     :return: list of actions representing the solution to the quest
     """
-    # Enter your  code here and remove the pass statement below
-    pass
+    closed = set()  # keep track of our explored
+    fringe = data_structures.PriorityQueue() # for ucs, the fringe is a Priority queue
+    state = problem.start_state()
+    root = data_structures.Node(state, None, None, 0)
+    fringe.push(root, data_structures.Node.solution(root))
+    while not fringe.is_empty():
+        node = fringe.pop()
+        if problem.is_goal(node.state):
+            return node.solution()  # we found a solution
+        if node.state not in closed:  # we are implementing graph search
+            closed.add(node.state)
+            for child_state, action, action_cost in problem.expand(node.state):
+                child_node = data_structures.Node(child_state, node, action, 1)
+                fringe.push(child_node, data_structures.Node.solution(child_node))
+    return None
+
