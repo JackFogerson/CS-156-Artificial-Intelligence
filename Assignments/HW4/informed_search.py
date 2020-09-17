@@ -84,16 +84,32 @@ def single_heuristic(state, problem):
 
 def better_heuristic(state, problem):
     """
-    Fill in the docstring here
+    Heuristic used with A* to find Manhattan distance * action cost from single medal
+    Running A* with this better heuristic, gives us better performance than A* with single_heuristic
     :param
     state: A state is represented by a tuple containing:
                 the current position of Sammy the Spartan
                 a tuple containing the positions of the remaining medals
     problem: (a Problem object) representing the quest
-    :return:
+    :return: Manhattan Distance multiplied by the problem cost of each step, 0 if no medals remain
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    (pos, medals) = state
+    x = 0
+    y = 0
+    if medals:
+        if medals[0][0] > pos[0]:
+            x = abs(medals[0][0] - pos[0]) * problem.cost[problem.EAST]
+        else:
+            x = abs(medals[0][0] - pos[0]) * problem.cost[problem.WEST]
+
+        if medals[0][1] > pos[1]:
+            y = abs(medals[0][1] - pos[1]) * problem.cost[problem.SOUTH]
+        else:
+            y = abs(medals[0][1] - pos[1]) * problem.cost[problem.NORTH]
+        return x + y
+
+    else:
+        return 0
 
 
 def gen_heuristic(state, problem):
