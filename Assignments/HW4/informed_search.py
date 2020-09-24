@@ -13,7 +13,7 @@ Your task for homework 4 is to implement:
 3.  better_heuristic
 4.  gen_heuristic
 """
-from Homework4 import data_structures
+import data_structures
 
 
 def astar(problem, heuristic):
@@ -121,20 +121,20 @@ def gen_heuristic(state, problem):
     :return: Highest heuristic in the list, 0 if no medals left
     """
     (pos, medals) = state
+    sum = 0
     heuristiclist = []
-    for medal in medals:
-        if medals[0][0] > pos[0]:
-            x = abs(medals[0][0] - pos[0]) * problem.cost[problem.EAST]
-        else:
-            x = abs(medals[0][0] - pos[0]) * problem.cost[problem.WEST]
+    if medals:
+        for medal in medals:
+            if medals[0][0] > pos[0]:
+                x = abs(medals[0][0] - pos[0]) * problem.cost[problem.EAST]
+            else:
+                x = abs(medals[0][0] - pos[0]) * problem.cost[problem.WEST]
 
-        if medals[0][1] > pos[1]:
-            y = abs(medals[0][1] - pos[1]) * problem.cost[problem.SOUTH]
-        else:
-            y = abs(medals[0][1] - pos[1]) * problem.cost[problem.NORTH]
-        heuristiclist.append(x + y)
-
-    if len(heuristiclist) == 0:
-        return 0
+            if medals[0][1] > pos[1]:
+                y = abs(medals[0][1] - pos[1]) * problem.cost[problem.SOUTH]
+            else:
+                y = abs(medals[0][1] - pos[1]) * problem.cost[problem.NORTH]
+            sum += x + y
+        return sum
     else:
-        return max(heuristiclist)
+        return 0
