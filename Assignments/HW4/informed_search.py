@@ -7,14 +7,13 @@
 # ----------------------------------------------------------------------
 """
 A* Algorithm and heuristics implementation
-
 Your task for homework 4 is to implement:
 1.  astar
 2.  single_heuristic
 3.  better_heuristic
 4.  gen_heuristic
 """
-import data_structures
+from Homework4 import data_structures
 
 
 def astar(problem, heuristic):
@@ -69,7 +68,6 @@ def single_heuristic(state, problem):
                 the current position of Sammy the Spartan
                 a tuple containing the positions of the remaining medals
     problem: (a Problem object) representing the quest
-
     :return: Manhattan Distance between Sammy and medal, 0 if no medals left
     """
     (pos, medals) = state
@@ -111,7 +109,6 @@ def better_heuristic(state, problem):
     else:
         return 0
 
-
 def gen_heuristic(state, problem):
     """
     Fill in the docstring here
@@ -122,5 +119,21 @@ def gen_heuristic(state, problem):
     problem: (a Problem object) representing the quest
     :return:
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    (pos, medals) = state
+    heuristiclist = []
+    for medal in medals:
+        if medals[0][0] > pos[0]:
+            x = abs(medals[0][0] - pos[0]) * problem.cost[problem.EAST]
+        else:
+            x = abs(medals[0][0] - pos[0]) * problem.cost[problem.WEST]
+
+        if medals[0][1] > pos[1]:
+            y = abs(medals[0][1] - pos[1]) * problem.cost[problem.SOUTH]
+        else:
+            y = abs(medals[0][1] - pos[1]) * problem.cost[problem.NORTH]
+        heuristiclist.append(x + y)
+
+    if len(heuristiclist) == 0:
+        return 0
+    else:
+        return max(heuristiclist)
