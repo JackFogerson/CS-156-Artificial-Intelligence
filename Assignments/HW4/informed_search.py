@@ -111,13 +111,14 @@ def better_heuristic(state, problem):
 
 def gen_heuristic(state, problem):
     """
-    Fill in the docstring here
+    General heuristic takes the better heuristic of every medal and adds it to a list, where it is
+    compared to other heuristics.
     :param
     state: A state is represented by a tuple containing:
                 the current position of Sammy the Spartan
                 a tuple containing the positions of the remaining medals
     problem: (a Problem object) representing the quest
-    :return:
+    :return: Highest heuristic in the list, 0 if no medals left
     """
     (pos, medals) = state
     heuristiclist = []
