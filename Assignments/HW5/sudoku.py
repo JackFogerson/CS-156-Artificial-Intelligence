@@ -2,7 +2,7 @@
 # Name:     sudoku
 # Purpose:  Homework5
 #
-# Author(s):
+# Author(s): Spencer Enriquez, Jon Fogerson
 #
 # ----------------------------------------------------------------------
 """
@@ -14,7 +14,53 @@ q3:  Backtracking Search with MRV Ordering and AC-3
 """
 import csp
 
-# Enter your helper functions here
+# Helper function to createNeighbors, finds neighbor for specific cell
+def getNeighbors(row, col):
+    s = set()
+
+    # By Row and Column
+    for i in range(9):
+        if i != col:
+            s.add((row, i))
+        if i != row:
+            s.add((i, col))
+
+    # By group
+    gRow = int(row/3)
+    gCol = int(col/3)
+    for j in range(gRow * 3, gRow * 3 + 3):
+        for k in range(gCol * 3, gCol * 3 + 3):
+            if (row, col) != (j, k) and (j, k) not in s:
+                s.add((j, k))
+    # print(f'({row}, {col}) = {s}')
+    return s
+
+# Create Domain of values 1-9 for each cell
+def createDomains(puzzle):
+    domains = {}
+    i = 0
+    j = 0
+    for i in range(9):
+        for j in range(9):
+            if (i, j) in puzzle.keys():
+                domains[(i, j)] = {puzzle[(i, j)]}
+            else:
+                domains[(i, j)] = {1, 2, 3, 4, 5, 6, 7, 8, 9}
+            # print(f'({i}, {j}) = {domains[(i,j)]}')
+    return domains
+
+# Calculates set of neighbors according to row, column, and grouping
+def createNeighbors(puzzle):
+    neighbors = {}
+    i = 0
+    j = 0
+    for i in range(9):
+        for j in range(9):
+            neighbors[(i, j)] = getNeighbors(i, j)
+    return neighbors
+
+def createConstraints(var1, val1, var2, val2):
+    return val1 != val2
 
 def build_csp(puzzle):
     """
@@ -24,8 +70,7 @@ def build_csp(puzzle):
     are the corresponding numbers assigned to these squares.
     :return: CSP object
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    return csp.CSP(createDomains(puzzle), createNeighbors(puzzle), createConstraints)
 
 
 def q1(puzzle):
@@ -37,8 +82,8 @@ def q1(puzzle):
     :return: a tuple consisting of a solution (dictionary) and the
     CSP object.
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    csp = build_csp(puzzle)
+    return csp.backtracking_search(), csp
 
 def q2(puzzle):
     """
@@ -50,8 +95,9 @@ def q2(puzzle):
     :return: a tuple consisting of a solution (dictionary) and the
     CSP object.
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    csp = build_csp(puzzle)
+    csp.ac3_algorithm()
+    return csp.backtracking_search(), csp
 
 def q3(puzzle):
     """
@@ -63,5 +109,6 @@ def q3(puzzle):
     :return: a tuple consisting of a solution (dictionary) and the
     CSP object.
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    csp = build_csp(puzzle)
+    csp.ac3_algorithm()
+    return csp.backtracking_search("MRV"), csp
