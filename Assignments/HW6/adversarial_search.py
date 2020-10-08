@@ -38,11 +38,8 @@ def minimax(game_state):
     :param game_state: GameState object
     :return:  a tuple representing the row column of the best move
     """
-    dict = {}
-    moves = game_state.possible_moves()
-    for m in moves:
-        dict[m] = value(game_state.successor(m, "user"), "AI")
-    return max(dict, key = lambda x: dict[x])
+
+    return max(game_state.possible_moves(), key = lambda m: value(game_state.successor(m, "AI"), "user"))
 
 def value(game_state, agent):
     """
@@ -53,10 +50,12 @@ def value(game_state, agent):
     :param agent: (string) 'user' or 'AI' - AI is max
     :return: (integer) value of that state -1, 0 or 1
     """
-    if game_state.is_win(agent):
-        return game_state.eval()
+    if game_state.is_win("AI"):
+        return 1
+    elif game_state.is_win("user"):
+        return -1
     elif game_state.is_tie():
-        return game_state.eval()
+        return 0
     else:
         if agent == "AI":
             return max_value(game_state)
@@ -76,7 +75,6 @@ def max_value(game_state):
     for r, c in moves:
         values.append(value(game_state.successor((r, c), "AI"), "user"))
     return max(values)
-
 
 def min_value(game_state):
     """
