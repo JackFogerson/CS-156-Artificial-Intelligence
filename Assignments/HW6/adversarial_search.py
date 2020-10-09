@@ -98,8 +98,7 @@ def alphabeta(game_state):
     :param game_state: GameState object
     :return:  a tuple representing the row column of the best move
     """
-    # Enter your code here and remove the raise statement below
-    raise NotImplementedError
+    return max(game_state.possible_moves(), key = lambda m: ab_value(game_state.successor(m, "AI"), "user", -math.inf, math.inf))
 
 
 def ab_value(game_state, agent, alpha, beta):
@@ -111,8 +110,17 @@ def ab_value(game_state, agent, alpha, beta):
     :param agent: (string) 'user' or 'AI' - AI is max
     :return: (integer) value of that state -1, 0 or 1
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    if game_state.is_win("AI"):
+        return 1
+    elif game_state.is_win("user"):
+        return -1
+    elif game_state.is_tie():
+        return 0
+    else:
+        if agent == "AI":
+            return abmax_value(game_state, alpha, beta)
+        else:
+            return abmin_value(game_state, alpha, beta)
 
 
 def abmax_value(game_state, alpha, beta):
@@ -122,8 +130,14 @@ def abmax_value(game_state, alpha, beta):
     :param game_state: non-terminal GameState object
     :return: (integer) value of that state -1, 0 or 1
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    v = -math.inf
+    moves = game_state.possible_moves()
+    for m in moves:
+        v = max(v, ab_value(game_state.successor(m, "AI"), "user", alpha, beta))
+        if v >= beta:
+            return v
+        alpha = max(alpha, v)
+    return v
 
 
 def abmin_value(game_state, alpha, beta):
@@ -133,8 +147,14 @@ def abmin_value(game_state, alpha, beta):
     :param game_state: non-terminal GameState object
     :return: (integer) value of that state -1, 0 or 1
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    v = math.inf
+    moves = game_state.possible_moves()
+    for m in moves:
+        v = min(v, ab_value(game_state.successor(m, "user"), "AI", alpha, beta))
+        if v <= alpha:
+            return v
+        beta = min(beta, v)
+    return v
 
 
 def abdl(game_state, depth):
