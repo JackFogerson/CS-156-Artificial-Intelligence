@@ -7,7 +7,6 @@
 # ----------------------------------------------------------------------
 """
 Adversarial search algorithms implementation
-
 Your task for homework 6 is to implement:
 1.  minimax
 2.  alphabeta
@@ -165,9 +164,7 @@ def abdl(game_state, depth):
     :param game_state: GameState object
     :return:  a tuple representing the row column of the best move
     """
-    # Enter your code here and remove the raise statement below
-    raise NotImplementedError
-
+    return max(game_state.possible_moves(), key = lambda m: abdl_value(game_state.successor(m, "AI"), "user", -math.inf, math.inf, depth))
 
 
 def abdl_value(game_state, agent, alpha, beta, depth):
@@ -180,8 +177,19 @@ def abdl_value(game_state, agent, alpha, beta, depth):
     :param agent: (string) 'user' or 'AI' - AI is max
     :return: (integer) utility of that state
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    if game_state.is_win("AI"):
+        return 1
+    elif game_state.is_win("user"):
+        return -1
+    elif game_state.is_tie():
+        return 0
+    elif depth == 0:
+        return game_state.eval()
+    else:
+        if agent == "AI":
+            return abdlmax_value(game_state, alpha, beta, depth)
+        else:
+            return abdlmin_value(game_state, alpha, beta, depth)
 
 
 def abdlmax_value(game_state, alpha, beta, depth):
@@ -192,8 +200,14 @@ def abdlmax_value(game_state, alpha, beta, depth):
     :param game_state: non-terminal GameState object
     :return: (integer) utility (evaluation function) of that state
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    v = -math.inf
+    moves = game_state.possible_moves()
+    for m in moves:
+        v = max(v, abdl_value(game_state.successor(m, "AI"), "user", alpha, beta, depth-1))
+        if v >= beta:
+            return v
+        alpha = max(alpha, v)
+    return v
 
 
 def abdlmin_value( game_state, alpha, beta, depth):
@@ -204,6 +218,12 @@ def abdlmin_value( game_state, alpha, beta, depth):
     :param game_state: non-terminal GameState object
     :return: (integer) utility (evaluation function) of that state
     """
-    # Enter your code here and remove the pass statement below
-    pass
+    v = math.inf
+    moves = game_state.possible_moves()
+    for m in moves:
+        v = min(v, abdl_value(game_state.successor(m, "user"), "AI", alpha, beta, depth-1))
+        if v <= alpha:
+            return v
+        beta = min(beta, v)
+    return v
 
