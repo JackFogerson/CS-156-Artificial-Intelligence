@@ -304,7 +304,7 @@ def get_arguments():
 def main():
     # To get predictable results and test your code, uncomment the
     # statement below.  The game will be boring when you do that :(
-    # random.seed(1)
+    random.seed(1)
     size, mode = get_arguments()
     # Instantiate a root window
     root = tkinter.Tk()

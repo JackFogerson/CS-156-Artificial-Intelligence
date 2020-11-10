@@ -59,7 +59,15 @@ class Belief(object):
         # Don't forget to normalize.
         # Don't forget to update self.open since sensor_position has
         # now been observed.
-        pass
+        sumProb = float(0)
+        for x,y in self.current_distribution:
+            dist = utils.manhattan_distance((x,y), sensor_position)
+            # P(S|T), float probability
+            cp = model.psonargivendist(color, dist)
+            self.current_distribution[x,y] = self.current_distribution[x,y] * cp
+            sumProb += self.current_distribution[x,y]
+        for w,z in self.current_distribution:
+            self.current_distribution[w,z] = self.current_distribution[w,z] / sumProb
 
     def recommend_sensing(self):
         """
