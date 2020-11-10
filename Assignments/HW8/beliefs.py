@@ -59,6 +59,7 @@ class Belief(object):
         # Don't forget to normalize.
         # Don't forget to update self.open since sensor_position has
         # now been observed.
+        self.open.remove(sensor_position)
         sumProb = float(0)
         for x,y in self.current_distribution:
             dist = utils.manhattan_distance((x,y), sensor_position)
