@@ -69,7 +69,7 @@ class Belief(object):
         for w,z in self.current_distribution:
             self.current_distribution[w,z] = self.current_distribution[w,z] / sumProb
 
-    def recommend_sensing(self):
+   def recommend_sensing(self):
         """
         Recommend where we should take the next measurement in the grid.
         The position should be the most promising unobserved location.
@@ -85,15 +85,20 @@ class Belief(object):
         #for perc in self.open:
         #    prob = self.current_distribution[perc]
 
-        prob = {
-            perc: self.current_distribution[perc] for perc in self.open
-        }
+       #finds highest observed location
+        highObserved = max(self.current_distribution, key= self.current_distribution.get);
 
-        recommend = max(prob, key=lambda perc: prob[perc]);
+        #finds highest unobserved location
+        recommend = max(self.open, key= self.current_distribution.get);
 
-        if self.current_distribution[recommend]>0:
-            return recommend;
+        unobs = len(self.open);
+
+        #checks for remaining unobserved locations
+        if unobs > 0:
+            if self.current_distribution.get(recommend)>0:
+                return recommend;
+            else:
+                closest = utils.closest_point(highObserved, self.open);
+                return closest;
         else:
-            observed = max(self.current_distribution.keys(), key=lambda perc: prob[perc]);
-            closest = utils.closest_point(observed, self.open);
-            return closest;
+            return highObserved;
