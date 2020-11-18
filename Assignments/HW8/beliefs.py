@@ -64,7 +64,7 @@ class Belief(object):
             dist = utils.manhattan_distance((x,y), sensor_position)
             # P(S|T), float probability
             cp = model.psonargivendist(color, dist)
-            self.current_distribution[x,y] = self.current_distribution[x,y] * cp
+            self.current_distribution[x,y] *= cp
             sumProb += self.current_distribution[x,y]
         for w,z in self.current_distribution:
             self.current_distribution[w,z] = self.current_distribution[w,z] / sumProb
