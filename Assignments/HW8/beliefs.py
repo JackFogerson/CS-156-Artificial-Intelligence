@@ -91,10 +91,12 @@ class Belief(object):
         #finds highest unobserved location
         recommend = max(self.open, key= self.current_distribution.get);
 
+        #how many unobserved spots are left
         unobs = len(self.open);
 
         #checks for remaining unobserved locations
         if unobs > 0:
+            #check if probabilities above 0
             if self.current_distribution.get(recommend)>0:
                 return recommend;
             else:
