@@ -21,7 +21,6 @@ class Belief(object):
     sensing evidence we have so far.
     Arguments:
     size (int): the number of rows/columns in the grid
-
     Attributes:
     open (set of tuples): set containing all the positions that have not
         been observed so far.
@@ -79,9 +78,22 @@ class Belief(object):
         location with he highest probablity.
         If there are no remaining unobserved locations return the
         (observed) location with the highest probability.
-
         :return: tuple representing the position where we should take
             the next measurement
         """
         # Enter your code and remove the statement below
-        return NotImplemented
+        #for perc in self.open:
+        #    prob = self.current_distribution[perc]
+
+        prob = {
+            perc: self.current_distribution[perc] for perc in self.open
+        }
+
+        recommend = max(prob, key=lambda perc: prob[perc]);
+
+        if self.current_distribution[recommend]>0:
+            return recommend;
+        else:
+            observed = max(self.current_distribution.keys(), key=lambda perc: self.current_distribution[perc]);
+            closest = utils.closest_point(observed, self.open);
+            return closest;
