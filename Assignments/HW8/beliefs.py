@@ -94,6 +94,6 @@ class Belief(object):
         if self.current_distribution[recommend]>0:
             return recommend;
         else:
-            observed = max(self.current_distribution.keys(), key=lambda perc: self.current_distribution[perc]);
+            observed = max(self.current_distribution.keys(), key=lambda perc: prob[perc]);
             closest = utils.closest_point(observed, self.open);
             return closest;
