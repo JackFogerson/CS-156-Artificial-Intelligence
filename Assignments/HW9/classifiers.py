@@ -84,8 +84,8 @@ class Perceptron(object):
         pred = np.array([0] * len(example.fvector))
         for w in self.weights:
             current = np.asarray(example.fvector)
-            i = self.weights[w] * current
-            if (pred > i).all:
+            i = self.weights[w] @ current
+            if np.greater(i, pred).all:
                 pred = i
                 label = w
         return label
