@@ -80,8 +80,14 @@ class Perceptron(object):
         :param example (Example): representing a single example
         :return: label: A valid label
         """
-        # Enter your code and remove the statement below
-        return NotImplemented
+        label = ""
+        pred = 0
+        for w in self.weights:
+            i = self.weights[w] * example
+            if pred > i:
+                pred = i
+                label = w
+        return label
 
 
 # ----------------------------------------------------------------------
