@@ -81,10 +81,11 @@ class Perceptron(object):
         :return: label: A valid label
         """
         label = ""
-        pred = 0
+        pred = np.array([0] * len(example.fvector))
         for w in self.weights:
-            i = self.weights[w] * example
-            if pred > i:
+            current = np.asarray(example.fvector)
+            i = self.weights[w] * current
+            if (pred > i).all:
                 pred = i
                 label = w
         return label
