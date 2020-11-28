@@ -2,7 +2,7 @@
 # Name:     classifiers
 # Purpose:  Homework 9
 #
-# Author(s):
+# Author(s): Spencer Enriquez, John Fogerson
 #
 # ----------------------------------------------------------------------
 """
@@ -96,8 +96,21 @@ def predict_knn(data, example, k):
     :param k: number of nearest neighbors to consider
     :return: label: valid label from the given dataset
     """
-    # Enter your code and remove the statement below
-    return NotImplemented
+    # Use distance to find most similar examples, sort
+    distTuples = list()
+    for d in data:
+        distTuples.append((d, example.distance(d)))
+    distTuples.sort(key=lambda x: x[1])
 
-
+    # Find most common labels
+    labels = list()
+    for i in range(k):
+        newLabel = True
+        for j in range(len(labels)):
+            if labels[j][0] == distTuples[i][0].label:
+                labels[j] == (labels[j][0], labels[j][1] + 1)
+                newLabel = False
+        if newLabel:
+            labels.append((distTuples[i][0].label, 1))
+    return max(labels, key=lambda x: x[1])[0]
 
