@@ -73,9 +73,10 @@ class Perceptron(object):
         """
         for w in self.weights:
             pred = self.predict(example)
-            while pred != self.weight[w]:
-                self.weight[w] += example
+            while pred != self.weights[w]:
+                self.weights[w] += example
                 pred -= example
+
 
 
     def predict(self, example):
