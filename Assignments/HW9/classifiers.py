@@ -65,14 +65,18 @@ class Perceptron(object):
             for example in data:
                 self.update_weights(example)
 
-    def update_weights(self, example):
+       def update_weights(self, example):
         """
         Update the Perceptron weights based on a single training example
         :param example (Example): representing a single training example
         :return: None
         """
-        # Enter your code and remove the statement below
-        return NotImplemented
+        for w in self.weights:
+            pred = self.predict(example)
+            while pred != self.weight[w]:
+                self.weight[w] += example
+                pred -= example
+
 
     def predict(self, example):
         """
@@ -81,10 +85,11 @@ class Perceptron(object):
         :return: label: A valid label
         """
         label = ""
-        pred = 0
+        pred = np.array([0] * len(example.fvector))
         for w in self.weights:
-            i = self.weights[w] * example
-            if pred > i:
+            current = np.asarray(example.fvector)
+            i = self.weights[w] @ current
+            if np.greater(i, pred).all:
                 pred = i
                 label = w
         return label
