@@ -65,7 +65,7 @@ class Perceptron(object):
             for example in data:
                 self.update_weights(example)
 
-       def update_weights(self, example):
+    def update_weights(self, example):
         """
         Update the Perceptron weights based on a single training example
         :param example (Example): representing a single training example
