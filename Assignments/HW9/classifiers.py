@@ -83,7 +83,6 @@ class Perceptron(object):
         :param example (Example): representing a single example
         :return: label: A valid label
         """
-        # Fix comparison
         label = ""
         pred = -99.0
         for w in self.weights:
