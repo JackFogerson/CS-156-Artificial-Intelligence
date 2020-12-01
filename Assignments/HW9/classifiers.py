@@ -71,13 +71,11 @@ class Perceptron(object):
         :param example (Example): representing a single training example
         :return: None
         """
-
         #for w in self.weights:
         #    pred = self.predict(example)
-        #   if pred != w:
+        #    if pred != w:
         #       self.weights[w] += example.fvector
-        #        self.weights[pred] -= example.fvector
-
+        #       self.weights[pred] -= example.fvector
 
     def predict(self, example):
         """
@@ -87,11 +85,11 @@ class Perceptron(object):
         """
         # Fix comparison
         label = ""
-        pred = np.array([0] * len(example.fvector))
+        pred = -99.0
         for w in self.weights:
             current = np.asarray(example.fvector)
             i = self.weights[w] @ current
-            if np.greater(i, pred).all:
+            if i > pred:
                 pred = i
                 label = w
         return label
