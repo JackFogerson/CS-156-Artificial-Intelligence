@@ -71,11 +71,11 @@ class Perceptron(object):
         :param example (Example): representing a single training example
         :return: None
         """
-        #for w in self.weights:
-        #    pred = self.predict(example)
-        #    if pred != w:
-        #       self.weights[w] += example.fvector
-        #       self.weights[pred] -= example.fvector
+        pred = self.predict(example)
+        if pred != example.label:
+            self.weights[example.label] = self.weights[example.label] + example.fvector
+            self.weights[pred] = self.weights[pred] - example.fvector
+
 
     def predict(self, example):
         """
