@@ -71,8 +71,13 @@ class Perceptron(object):
         :param example (Example): representing a single training example
         :return: None
         """
-        # Enter your code and remove the statement below
-        return NotImplemented
+
+        #for w in self.weights:
+        #    pred = self.predict(example)
+        #   if pred != w:
+        #       self.weights[w] += example.fvector
+        #        self.weights[pred] -= example.fvector
+
 
     def predict(self, example):
         """
@@ -80,6 +85,7 @@ class Perceptron(object):
         :param example (Example): representing a single example
         :return: label: A valid label
         """
+        # Fix comparison
         label = ""
         pred = np.array([0] * len(example.fvector))
         for w in self.weights:
