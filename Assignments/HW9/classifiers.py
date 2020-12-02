@@ -118,7 +118,7 @@ def predict_knn(data, example, k):
         newLabel = True
         for j in range(len(labels)):
             if labels[j][0] == distTuples[i][0].label:
-                labels[j] == (labels[j][0], labels[j][1] + 1)
+                labels[j] = (labels[j][0], labels[j][1] + 1)
                 newLabel = False
         if newLabel:
             labels.append((distTuples[i][0].label, 1))
